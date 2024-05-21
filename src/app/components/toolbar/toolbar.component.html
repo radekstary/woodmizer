@@ -3,11 +3,15 @@
     @if(!isLoaded) {
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     }@else {
-    <span>{{routeTitle}}</span>
+    <button mat-icon-button aria-label="Back icon">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     <span class="spacer"></span>
-    <!-- <button mat-icon-button aria-label="Menu toggle icon">
+    <span style="margin: auto">{{ routeTitle }}</span>
+    <span class="spacer"></span>
+    <button mat-icon-button  aria-label="Menu toggle icon">
       <mat-icon>menu</mat-icon>
-    </button> -->
+    </button>
     }
   </div>
 </mat-toolbar>

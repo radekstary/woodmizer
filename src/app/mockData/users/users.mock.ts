@@ -50,7 +50,7 @@ export const USERS: User[] = [
     qtyOfCars: 10,
   },
   {
-    fname: 'Chittur Gopalakrishnan Kaashi',
+    fname: 'Chittur Gopalakrishnan Kaashi Halan',
     lname: 'Vishwanathan Iyer',
     birthDate: new Date('1978-09-06'),
     qtyOfCars: 4,

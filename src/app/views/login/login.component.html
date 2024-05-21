@@ -4,19 +4,16 @@
       <mat-card class="card">
         <mat-card-header>
           <mat-card-subtitle>
-            {{
-              user.fname
-                | slice : 0 : (user.fname.length > 26 ? 26 : user.fname.length)
-            }}
-            @if(user.fname.length > 26) {
-            <span [matTooltip]="user.fname">...</span> }
+            <span
+              [innerHTML]="user.fname | ellipsis : 30"
+              [matTooltip]="user.fname.length > 30 ? user.fname : ''"
+            ></span>
           </mat-card-subtitle>
-          <mat-card-title
-            >{{
-              user.lname
-                | slice : 0 : (user.lname.length > 20 ? 20 : user.lname.length)
-            }}
-            @if(user.lname.length > 20) {<span [matTooltip]="user.lname">...</span>}
+          <mat-card-title>
+            <span
+              [innerHTML]="user.lname | ellipsis : 20"
+              [matTooltip]="user.lname.length > 20 ? user.lname : ''"
+            ></span>
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>

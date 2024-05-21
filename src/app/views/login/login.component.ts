@@ -8,20 +8,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { EllipsisPipe } from "../../pipes/ellipsis.pipe";
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatGridListModule,
-    MatCardModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatProgressBarModule,
-    MatTooltipModule
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+    selector: 'app-login',
+    standalone: true,
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.scss',
+    imports: [
+        CommonModule,
+        MatGridListModule,
+        MatCardModule,
+        MatButtonModule,
+        MatDividerModule,
+        MatProgressBarModule,
+        MatTooltipModule,
+        EllipsisPipe
+    ]
 })
 export class LoginComponent {
   public users: User[] = USERS;

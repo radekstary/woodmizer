@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -14,7 +15,12 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-toolbar',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, MatProgressBarModule],
+  imports: [
+    MatToolbarModule,
+    MatIconModule,
+    MatProgressBarModule,
+    MatButtonModule,
+  ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
 })
