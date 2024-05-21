@@ -1,0 +1,13 @@
+<mat-toolbar color="primary">
+  <div class="container flex">
+    @if(!isLoaded) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }@else {
+    <span>{{routeTitle}}</span>
+    <span class="spacer"></span>
+    <!-- <button mat-icon-button aria-label="Menu toggle icon">
+      <mat-icon>menu</mat-icon>
+    </button> -->
+    }
+  </div>
+</mat-toolbar>

@@ -1,0 +1,44 @@
+<div class="container">
+  <mat-grid-list [cols]="4" [rowHeight]="200">
+    <mat-grid-tile *ngFor="let user of users; let i = index">
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-subtitle>
+            {{
+              user.fname
+                | slice : 0 : (user.fname.length > 26 ? 26 : user.fname.length)
+            }}
+            @if(user.fname.length > 26) {
+            <span [matTooltip]="user.fname">...</span> }
+          </mat-card-subtitle>
+          <mat-card-title
+            >{{
+              user.lname
+                | slice : 0 : (user.lname.length > 20 ? 20 : user.lname.length)
+            }}
+            @if(user.lname.length > 20) {<span [matTooltip]="user.lname">...</span>}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Data urodzenia:</p>
+          <p>{{ user.birthDate | date : "yyyy-MM-dd" }}</p>
+          <mat-divider></mat-divider>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-button
+            (click)="selectUser(i)"
+            style="margin: auto; width: 100%"
+          >
+            Wybierz
+          </button>
+        </mat-card-actions>
+        <mat-card-footer>
+          <mat-progress-bar
+            mode="indeterminate"
+            *ngIf="user === selectedUser"
+          ></mat-progress-bar>
+        </mat-card-footer> </mat-card
+    ></mat-grid-tile>
+  </mat-grid-list>
+</div>
