@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { NavService } from './services/nav.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ToolbarComponent],
+  imports: [RouterOutlet, NavbarComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'woodmizer';
+  public title = 'woodmizer';
+  constructor() {}
 }

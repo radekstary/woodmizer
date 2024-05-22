@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+  <div class="container flex navbar__grid">
+    @if(!isLoaded) {
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }@else {
+    <div class="navbar__left">
+      <button
+        mat-icon-button
+        aria-label="Back icon"
+        *ngIf="!nav.isRoot()"
+        (click)="goBack()"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    </div>
+    <div class="navbar__center">
+      <span style="margin: auto" *ngIf="isLoaded">{{ routeTitle }}</span>
+    </div>
+    <div class="navbar__right">
+      <button
+        mat-icon-button
+        aria-label="Logout icon"
+        *ngIf="auth.loggedUser()"
+        (click)="logOut()"
+      >
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+    }
+  </div>
+</mat-toolbar>

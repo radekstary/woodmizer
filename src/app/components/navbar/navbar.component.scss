@@ -1,0 +1,33 @@
+.mat-toolbar {
+  padding: 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.navbar__grid {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 2fr 8fr 2fr;
+}
+
+.navbar__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar__left {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  align-items: center;
+}
+
+.navbar__right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: center;
+}
