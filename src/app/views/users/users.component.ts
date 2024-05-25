@@ -30,6 +30,7 @@ import {
   ViewModeValue,
 } from '../../services/localStorageService/localStorage.interface';
 import { Router } from '@angular/router';
+import { UserCardComponent } from '../../components/user-card/user-card.component';
 @Component({
   selector: 'app-users',
   standalone: true,
@@ -48,6 +49,7 @@ import { Router } from '@angular/router';
     MatPaginatorModule,
     MatButtonToggleModule,
     MatIconModule,
+    UserCardComponent
   ],
   providers: [{ provide: MatPaginatorIntl, useValue: CustomPaginatorConfig() }],
 })

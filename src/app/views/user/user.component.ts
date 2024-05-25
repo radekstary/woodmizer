@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EllipsisPipe } from '../../pipes/ellipsis.pipe';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { UserCardComponent } from '../../components/user-card/user-card.component';
 
 @Component({
   selector: 'app-user',
@@ -23,7 +24,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatTooltipModule,
     EllipsisPipe,
     MatDividerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    UserCardComponent
   ],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss',

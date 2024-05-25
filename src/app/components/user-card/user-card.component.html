@@ -1,0 +1,51 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-subtitle>
+      <span
+        [innerHTML]="
+          truncateStrings ? (user?.fname | ellipsis : 30) : user?.fname
+        "
+        [matTooltip]="
+          showTooltips && user && user.fname.length > 30 ? user.fname : ''
+        "
+      ></span>
+    </mat-card-subtitle>
+    <mat-card-title>
+      <span
+        [innerHTML]="
+          truncateStrings ? (user?.lname | ellipsis : 20) : user?.lname
+        "
+        [matTooltip]="
+          showTooltips && user && user.lname.length > 20 ? user.lname : ''
+        "
+      ></span>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content >
+    <mat-divider ></mat-divider>
+    <p>Data urodzenia: {{ user?.birthDate | date : "yyyy-MM-dd" }}</p>
+    <p>Liczba pojazdów: {{ user?.qtyOfCars }}</p>
+    <mat-divider ></mat-divider>
+  </mat-card-content>
+  <mat-card-actions *ngIf="actionText.length">
+    <button
+      mat-button
+      (click)="handleActionButtonClick()"
+      style="margin: auto; width: 100%"
+      *ngIf="showActionButton; else actionTextTemplate"
+    >
+      {{ actionText }}
+    </button>
+    <ng-template #actionTextTemplate>
+      <div class="mat-body-strong" style="text-align: center; margin: auto">
+        {{ actionText }}
+      </div>
+    </ng-template>
+  </mat-card-actions>
+  <mat-card-footer *ngIf="showStatusBar">
+    <mat-progress-bar
+      mode="determinate"
+      [value]="user?.id === auth.currentUser()?.id ? 100 : 0"
+    ></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>
