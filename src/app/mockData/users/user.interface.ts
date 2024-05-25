@@ -3,4 +3,6 @@ export interface User {
   lname: string;
   birthDate: Date;
   qtyOfCars: number;
+  id: string
 }
+

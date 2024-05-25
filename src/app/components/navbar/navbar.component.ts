@@ -82,4 +82,17 @@ export class NavbarComponent {
   logOut(): void {
     this.auth.logout();
   }
+
+  openUserProfile(): void {
+    const currentUser = this.auth.currentUser();
+
+    if (!currentUser) {
+      /* TODO:
+      add a service to notify the user about authentication error
+      */
+      return;
+    }
+
+    this.router.navigate(['/user', currentUser.id]);
+  }
 }

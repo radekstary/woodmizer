@@ -1,12 +1,18 @@
 :host {
   position: relative;
   display: flex;
+  flex-direction: column;
   flex: 1 1 auto;
   overflow: hidden;
   justify-content: center;
   align-items: center;
+  gap: 24px;
 }
 
+.current-user {
+  margin-bottom: 48px;
+  text-align: center;
+}
 .fab-container {
   width: 220px;
   height: 40px;

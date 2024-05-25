@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  constructor(private router: Router) {}
+  constructor(public router: Router, public auth: AuthService) {}
   openUsers() {
     this.router.navigate(['users']);
   }

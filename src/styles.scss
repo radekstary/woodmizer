@@ -41,4 +41,5 @@ app-root {
   width: calc(100% + $blur * 2);
   height: calc(100% + $blur * 2);
   filter: blur($blur);
+  z-index: -1;
 }

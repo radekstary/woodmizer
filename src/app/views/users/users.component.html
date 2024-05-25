@@ -1,10 +1,10 @@
 <div class="container">
-  <div style="text-align: right; margin-bottom: 10px;">
+  <div style="text-align: right; margin-bottom: 10px">
     <mat-button-toggle-group
       name="fontStyle"
       aria-label="View Mode"
       #viewMode="matButtonToggleGroup"
-      value="tiles"
+      [value]="localStorageConfig.viewModeValue"
       (change)="onViewModeChange($event)"
     >
       <mat-button-toggle value="tiles"
@@ -26,7 +26,11 @@
 </div>
 
 <ng-template #tilesTemplate>
-  <mat-grid-list [cols]="4" [rowHeight]="200" style="margin-left: -10px; margin-right: -10px;">
+  <mat-grid-list
+    [cols]="4"
+    [rowHeight]="200"
+    style="margin-left: -10px; margin-right: -10px"
+  >
     <mat-grid-tile *ngFor="let user of users; let i = index">
       <mat-card class="card">
         <mat-card-header>
@@ -51,8 +55,9 @@
         <mat-card-actions>
           <button
             mat-button
-            (click)="selectUser(i)"
+            (click)="selectUser(users[i])"
             style="margin: auto; width: 100%"
+            *ngIf="user.id !== auth.currentUser()?.id; else loggedUserText"
           >
             Wybierz
           </button>
@@ -60,10 +65,11 @@
         <mat-card-footer>
           <mat-progress-bar
             mode="determinate"
-            [value]="user === auth.loggedUser() ? 100 : 0"
+            [value]="user.id === auth.currentUser()?.id ? 100 : 0"
           ></mat-progress-bar>
         </mat-card-footer> </mat-card
-    ></mat-grid-tile>
+    >
+    </mat-grid-tile>
   </mat-grid-list>
 </ng-template>
 
@@ -95,6 +101,21 @@
       <td mat-cell *matCellDef="let element">{{ element.qtyOfCars }}</td>
     </ng-container>
 
+    <!--User Choice Button Column-->
+    <ng-container matColumnDef="button">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          mat-button
+          (click)="selectUser(element)"
+          style="margin: auto; width: 100%"
+          *ngIf="element.id !== auth.currentUser()?.id; else loggedUserText"
+        >
+          Wybierz
+        </button>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
@@ -105,4 +126,13 @@
     aria-label="Wybór strony na liście użytkowników."
   >
   </mat-paginator>
+</ng-template>
+
+<ng-template #loggedUserText>
+  <div
+    class="mat-body-strong"
+    style="text-align: center; margin: auto; width: 100%"
+  >
+    Zalogowany
+  </div>
 </ng-template>

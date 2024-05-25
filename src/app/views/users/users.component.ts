@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { User } from '../../mockData/users/user.interface';
 import { USERS } from '../../mockData/users/users.mock';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -15,9 +15,21 @@ import {
   MatButtonToggleModule,
 } from '@angular/material/button-toggle';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import {
+  MatPaginator,
+  MatPaginatorIntl,
+  MatPaginatorModule,
+} from '@angular/material/paginator';
 
 import { MatIconModule } from '@angular/material/icon';
+import { CustomPaginatorConfig } from '../../config/CustomPaginator.config';
+import { LocalStorageService } from '../../services/localStorageService/localStorage.service';
+import {
+  LocalStorageConfig,
+  LocalStorageKey,
+  ViewModeValue,
+} from '../../services/localStorageService/localStorage.interface';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-users',
   standalone: true,
@@ -37,31 +49,59 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonToggleModule,
     MatIconModule,
   ],
+  providers: [{ provide: MatPaginatorIntl, useValue: CustomPaginatorConfig() }],
 })
 export class UsersComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-  public users: User[] = USERS;
+  private LOCAL_STORAGE_KEY: LocalStorageKey = 'UsersComponent';
+  public localStorageConfig: LocalStorageConfig;
+  public users: User[];
 
-  public dataSource = new MatTableDataSource<User>(USERS);
+  public dataSource: MatTableDataSource<User>;
   public displayedColumns: string[] = [
     'lname',
     'fname',
     'birthDate',
     'qtyOfCars',
+    'button',
   ];
-  constructor(public auth: AuthService) {}
+  public viewModeValue: ViewModeValue;
+  constructor(
+    public auth: AuthService,
+    private localStorageSvc: LocalStorageService,
+    private router: Router
+  ) {
+    this.users = USERS;
+    this.dataSource = new MatTableDataSource<User>(this.users);
+    this.localStorageConfig = this.localStorageSvc.getConfig(
+      this.LOCAL_STORAGE_KEY
+    );
+    this.viewModeValue = this.localStorageConfig?.viewModeValue || 'table';
+  }
 
   ngAfterViewInit() {
     if (this.paginator !== undefined)
       this.dataSource.paginator = this.paginator;
   }
 
-  selectUser(i: number) {
-    this.auth.loginAs(this.users[i]);
+  selectUser(user: User) {
+    this.auth.loginAs(user);
+    const currentUser = this.auth.currentUser();
+
+    if (!currentUser) {
+      /* TODO:
+      add a service to notify the user about authentication error
+      */
+      return;
+    }
+
+    this.router.navigate(['/user', currentUser.id]);
   }
 
   onViewModeChange(e: MatButtonToggleChange) {
-    console.log(e);
+    this.localStorageSvc.updateConfig(this.LOCAL_STORAGE_KEY, [
+      { key: 'viewModeValue', value: e.value },
+    ]);
     setTimeout(() => {
       if (e.value === 'table' && this.paginator) {
         this.dataSource.paginator = this.paginator;
