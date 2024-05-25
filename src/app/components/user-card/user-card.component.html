@@ -1,7 +1,7 @@
 <mat-card class="card">
   <mat-card-header>
     <mat-card-subtitle>
-      <span
+      <span #fname
         [innerHTML]="
           truncateStrings ? (user?.fname | ellipsis : 30) : user?.fname
         "
@@ -11,7 +11,7 @@
       ></span>
     </mat-card-subtitle>
     <mat-card-title>
-      <span
+      <span #lname
         [innerHTML]="
           truncateStrings ? (user?.lname | ellipsis : 20) : user?.lname
         "
@@ -23,9 +23,9 @@
   </mat-card-header>
   <mat-card-content >
     <mat-divider ></mat-divider>
-    <p>Data urodzenia: {{ user?.birthDate | date : "yyyy-MM-dd" }}</p>
-    <p>Liczba pojazdów: {{ user?.qtyOfCars }}</p>
-    <mat-divider ></mat-divider>
+    <p class="spacer">&nbsp;</p>
+    <p #birthDate>Data urodzenia: {{ user?.birthDate | date : "yyyy-MM-dd" }}</p>
+    <p #qtyOfCars>Liczba pojazdów: {{ user?.qtyOfCars }}</p>
   </mat-card-content>
   <mat-card-actions *ngIf="actionText.length">
     <button

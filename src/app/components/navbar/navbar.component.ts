@@ -14,6 +14,7 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule, Location } from '@angular/common';
 import { NavService } from '../../services/nav.service';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { AppService } from '../../app.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -34,6 +35,7 @@ export class NavbarComponent {
   public routeTitle: string | undefined | null = '';
   public hasHistory: boolean;
   constructor(
+    public app: AppService,
     private router: Router,
     private readonly route: ActivatedRoute,
     private titleStrategy: TitleStrategy,

@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -33,6 +40,10 @@ export class UserCardComponent {
   @Input('showTooltips') showTooltips: boolean = false;
   @Input('actionText') actionText: string = '';
   @Input('user') user: User | undefined;
+  @ViewChild('fname') fname: ElementRef<HTMLElement> | undefined;
+  @ViewChild('lname') lname: ElementRef<HTMLElement> | undefined;
+  @ViewChild('birthDate') birthDate: ElementRef<HTMLElement> | undefined;
+  @ViewChild('qtyOfCars') qtyOfCars: ElementRef<HTMLElement> | undefined;
 
   constructor(public auth: AuthService) {}
   handleActionButtonClick() {

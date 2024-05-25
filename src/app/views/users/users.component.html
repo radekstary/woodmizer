@@ -4,13 +4,16 @@
       name="fontStyle"
       aria-label="View Mode"
       #viewMode="matButtonToggleGroup"
-      [value]="localStorageConfig.viewModeValue"
+      [value]="
+        app.innerWidth() > 1200 ? localStorageConfig.viewModeValue : 'tiles'
+      "
       (change)="onViewModeChange($event)"
+      [ngStyle]="{display: app.innerWidth() > 1200 ? 'block' : 'none'}"
     >
       <mat-button-toggle value="tiles"
         ><mat-icon>grid_view</mat-icon></mat-button-toggle
       >
-      <mat-button-toggle value="table"
+      <mat-button-toggle value="table" *ngIf="app.innerWidth() > 1200"
         ><mat-icon>table_rows</mat-icon></mat-button-toggle
       >
     </mat-button-toggle-group>
@@ -27,9 +30,8 @@
 
 <ng-template #tilesTemplate>
   <mat-grid-list
-    [cols]="4"
-    [rowHeight]="200"
-    style="margin-left: -10px; margin-right: -10px"
+    [cols]="app.innerWidth() > 1200 ? 4 : app.innerWidth() > 540 ? 2 : 1"
+    style="margin-left: -10px; margin-right: -10px; height: 100%"
   >
     <mat-grid-tile *ngFor="let user of users; let i = index">
       <app-user-card
@@ -42,8 +44,8 @@
         [actionText]="
           user.id !== auth.currentUser()?.id ? 'Wybierz' : 'Zalogowany'
         "
-         class="card"
-         (onActionButtonClick)="selectUser(users[i])"
+        class="card"
+        (onActionButtonClick)="selectUser(users[i])"
       ></app-user-card>
     </mat-grid-tile>
   </mat-grid-list>

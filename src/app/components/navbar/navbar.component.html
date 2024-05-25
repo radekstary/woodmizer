@@ -14,7 +14,7 @@
       </button>
     </div>
     <div class="navbar__center">
-      <span style="margin: auto" *ngIf="isLoaded">{{ routeTitle }}</span>
+      <span style="margin: auto" *ngIf="isLoaded && app.innerWidth() > 540">{{ routeTitle }}</span>
     </div>
     <div class="navbar__right">
       <button

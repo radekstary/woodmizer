@@ -5,6 +5,22 @@
   background: #f9f9f9;
 }
 
-.card {
-  width: 92%;
+::ng-deep .card {
+  min-height: 92%;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  min-width: 92%;
+  flex-direction: column;
+  mat-card {
+    display: flex;
+    align-content: s;
+    height: 100%;
+    min-height: 100%;
+    flex: 1;
+
+    .mdc-card__actions {
+      margin-top: auto;
+    }
+  }
 }
