@@ -1,12 +1,9 @@
 import {
   Component,
-  ElementRef,
-  OnChanges,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import {  ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { UsersService } from '../../services/users.service';
@@ -46,11 +43,12 @@ export class UserComponent implements OnInit {
 
   offsetLeft: number = 20;
   lineHeight: number = 15;
+  ptsPerIn: number = 72;
+  pxPerIn: number = 96;
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private service: UsersService,
-    public auth: AuthService
+    public auth: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -59,47 +57,35 @@ export class UserComponent implements OnInit {
     );
   }
 
-  generatePdf(user: User): void {
+  cardToPdf(doc: jsPDF):void {
+    const cardContent = this.card?.jsPdfContent?.nativeElement;
+    if (!cardContent) return;
+    const bcr = cardContent.getBoundingClientRect();
+    doc.html(cardContent, {
+      callback: function (doc) {
+        /* get Blob and open it in a new tab */
+        const blob = doc.output('blob');
+        const blobUrl = URL.createObjectURL(blob);
+        window.open(blobUrl, '_blank');
+      },
+      x: 0,
+      y: 0,
+      html2canvas: {
+        ignoreElements: (el) => el.classList.contains('pdf-ignore'),
+      },
+      width: this.pxToPt(bcr.width),
+      windowWidth: this.pxToPt(bcr.width) * 2,
+    });
+  }
+
+  generatePdf(): void {
     if (!this.card) return;
     const doc = new jsPDF();
     this.addFonts(doc);
-    const elementsToPrint: Array<string> = [
-      'fname',
-      'lname',
-      'birthDate',
-      'qtyOfCars',
-    ];
 
-    let i = 0;
-    let offsetTop = 0;
-    let gap = 8;
-    for (let field of elementsToPrint) {
-      i++;
-      const elementRef = this.card[
-        field as keyof UserCardComponent
-      ] as ElementRef<HTMLElement>;
-      console.log('getLineHeightFactor', doc.getLineHeightFactor());
-      const el = elementRef.nativeElement;
-      const bcr = el.getBoundingClientRect();
-      const style = window.getComputedStyle(el, null);
+    this.cardToPdf(doc);
 
-      this.setFont(doc, style);
-
-      this.setFontSize(doc, style);
-
-      console.log(bcr);
-      doc.text(
-        `${elementRef.nativeElement.innerHTML}`,
-        this.offsetLeft,
-        bcr.height + offsetTop
-      );
-      offsetTop += bcr.height;
-    }
-
-    /* get Blob and open it in a new tab */
-    const blob = doc.output('blob');
-    const blobUrl = URL.createObjectURL(blob);
-    window.open(blobUrl, '_blank');
+    return;
   }
 
   addFonts(jspdfDoc: jsPDF): void {
@@ -127,8 +113,13 @@ export class UserComponent implements OnInit {
 
   setFontSize(jspdfDoc: jsPDF, style: CSSStyleDeclaration): void {
     const fontSize = style.getPropertyValue('font-size');
-    jspdfDoc.setFontSize(parseFloat(fontSize));
+    jspdfDoc.setFontSize(this.pxToPt(fontSize));
   }
 
   onSelectButtonClick() {}
+
+  pxToPt(px: number | string): number {
+    if (typeof px === 'string') px = parseFloat(px);
+    return px * (this.ptsPerIn / this.pxPerIn);
+  }
 }

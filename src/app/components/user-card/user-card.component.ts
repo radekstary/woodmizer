@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
+import { MatCard, MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -36,14 +36,11 @@ export class UserCardComponent {
   @Input('truncateStrings') truncateStrings: boolean = false;
   @Input('showDivider') showDivider: boolean = false;
   @Input('showStatusBar') showStatusBar: boolean = false;
-  @Input('showActionButton') showActionButton: boolean = false;
   @Input('showTooltips') showTooltips: boolean = false;
   @Input('actionText') actionText: string = '';
   @Input('user') user: User | undefined;
-  @ViewChild('fname') fname: ElementRef<HTMLElement> | undefined;
-  @ViewChild('lname') lname: ElementRef<HTMLElement> | undefined;
-  @ViewChild('birthDate') birthDate: ElementRef<HTMLElement> | undefined;
-  @ViewChild('qtyOfCars') qtyOfCars: ElementRef<HTMLElement> | undefined;
+  @Input('isPdfPreview') isPdfPreview: boolean = false;
+  @ViewChild('jsPdfContent') jsPdfContent: ElementRef<HTMLElement> | undefined;
 
   constructor(public auth: AuthService) {}
   handleActionButtonClick() {

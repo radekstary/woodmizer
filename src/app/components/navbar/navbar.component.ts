@@ -60,6 +60,8 @@ export class NavbarComponent {
         this.handleGoBackVisibility(val);
       }
     });
+
+
   }
 
   setTitle(val: ActivationStart) {
@@ -85,16 +87,4 @@ export class NavbarComponent {
     this.auth.logout();
   }
 
-  openUserProfile(): void {
-    const currentUser = this.auth.currentUser();
-
-    if (!currentUser) {
-      /* TODO:
-      add a service to notify the user about authentication error
-      */
-      return;
-    }
-
-    this.router.navigate(['/user', currentUser.id]);
-  }
 }

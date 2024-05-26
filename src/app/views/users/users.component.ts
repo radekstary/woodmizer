@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { User } from '../../mockData/users/user.interface';
 import { USERS } from '../../mockData/users/users.mock';
@@ -73,7 +73,8 @@ export class UsersComponent implements AfterViewInit {
     public app: AppService,
     public auth: AuthService,
     private localStorageSvc: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private cd: ChangeDetectorRef
   ) {
     this.users = USERS;
     this.dataSource = new MatTableDataSource<User>(this.users);
@@ -86,6 +87,8 @@ export class UsersComponent implements AfterViewInit {
   ngAfterViewInit() {
     if (this.paginator !== undefined)
       this.dataSource.paginator = this.paginator;
+
+    if(this.viewModeValue === 'table') this.cd.detectChanges();
   }
 
   selectUser(user: User) {

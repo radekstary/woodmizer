@@ -1,51 +1,56 @@
-<mat-card class="card">
-  <mat-card-header>
-    <mat-card-subtitle>
-      <span #fname
-        [innerHTML]="
-          truncateStrings ? (user?.fname | ellipsis : 30) : user?.fname
-        "
+@if(isPdfPreview) {
+<div #jsPdfContent style="max-width: 320px; margin: auto">
+  <ng-container [ngTemplateOutlet]="cardTemplate"></ng-container>
+</div>
+} @else {
+<ng-container [ngTemplateOutlet]="cardTemplate"></ng-container>
+}
+
+<ng-template #cardTemplate>
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-subtitle
         [matTooltip]="
           showTooltips && user && user.fname.length > 30 ? user.fname : ''
         "
-      ></span>
-    </mat-card-subtitle>
-    <mat-card-title>
-      <span #lname
-        [innerHTML]="
-          truncateStrings ? (user?.lname | ellipsis : 20) : user?.lname
-        "
+      >
+        <ng-container>{{
+          truncateStrings ? (user?.fname | ellipsis : 30) : user?.fname
+        }}</ng-container>
+      </mat-card-subtitle>
+      <mat-card-title
         [matTooltip]="
           showTooltips && user && user.lname.length > 20 ? user.lname : ''
         "
-      ></span>
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content >
-    <mat-divider ></mat-divider>
-    <p class="spacer">&nbsp;</p>
-    <p #birthDate>Data urodzenia: {{ user?.birthDate | date : "yyyy-MM-dd" }}</p>
-    <p #qtyOfCars>Liczba pojazdów: {{ user?.qtyOfCars }}</p>
-  </mat-card-content>
-  <mat-card-actions *ngIf="actionText.length">
-    <button
-      mat-button
-      (click)="handleActionButtonClick()"
-      style="margin: auto; width: 100%"
-      *ngIf="showActionButton; else actionTextTemplate"
-    >
-      {{ actionText }}
-    </button>
-    <ng-template #actionTextTemplate>
-      <div class="mat-body-strong" style="text-align: center; margin: auto">
+      >
+        <ng-container>{{
+          truncateStrings ? (user?.lname | ellipsis : 20) : user?.lname
+        }}</ng-container>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-divider></mat-divider>
+      <p class="spacer"></p>
+      <ng-container>
+        Data urodzenia: {{ user?.birthDate | date : "yyyy-MM-dd" }}
+      </ng-container>
+      <br />
+      <ng-container>Liczba pojazdów: {{ user?.qtyOfCars }}</ng-container>
+    </mat-card-content>
+    <mat-card-actions *ngIf="actionText.length" class="pdf-ignore">
+      <button
+        mat-button
+        (click)="handleActionButtonClick()"
+        style="margin: auto; width: 100%"
+      >
         {{ actionText }}
-      </div>
-    </ng-template>
-  </mat-card-actions>
-  <mat-card-footer *ngIf="showStatusBar">
-    <mat-progress-bar
-      mode="determinate"
-      [value]="user?.id === auth.currentUser()?.id ? 100 : 0"
-    ></mat-progress-bar>
-  </mat-card-footer>
-</mat-card>
+      </button>
+    </mat-card-actions>
+    <mat-card-footer *ngIf="showStatusBar" class="pdf-ignore">
+      <mat-progress-bar
+        mode="determinate"
+        [value]="user?.id === auth.currentUser()?.id ? 100 : 0"
+      ></mat-progress-bar>
+    </mat-card-footer>
+  </mat-card>
+</ng-template>

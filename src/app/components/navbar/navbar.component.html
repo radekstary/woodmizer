@@ -21,14 +21,6 @@
         mat-icon-button
         aria-label="Logout icon"
         *ngIf="auth.currentUser()"
-        (click)="openUserProfile()"
-      >
-        <mat-icon>account_circle</mat-icon>
-      </button>
-      <button
-        mat-icon-button
-        aria-label="Logout icon"
-        *ngIf="auth.currentUser()"
         (click)="logOut()"
       >
         <mat-icon>logout</mat-icon>

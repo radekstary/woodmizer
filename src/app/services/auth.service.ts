@@ -38,6 +38,5 @@ export class AuthService {
 
     /* send signal with current user ID */
     this.currentUser = signal(this.getCurrentUserData());
-    console.log('login', this.currentUser);
   }
 }

@@ -1,9 +1,10 @@
 <div *ngIf="user$ | async as user" class="container">
   <app-user-card
     [user]="user"
-    [showActionButton]="true"
     [actionText]="'Utwórz PDF'"
-    (onActionButtonClick)="generatePdf(user)"
+    [isPdfPreview]="true"
+    [truncateStrings]="true"
+    (onActionButtonClick)="generatePdf()"
     #card
   ></app-user-card>
 </div>

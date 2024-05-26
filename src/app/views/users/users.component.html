@@ -8,7 +8,7 @@
         app.innerWidth() > 1200 ? localStorageConfig.viewModeValue : 'tiles'
       "
       (change)="onViewModeChange($event)"
-      [ngStyle]="{display: app.innerWidth() > 1200 ? 'block' : 'none'}"
+      [ngStyle]="{ display: app.innerWidth() > 1200 ? 'inline-flex' : 'none' }"
     >
       <mat-button-toggle value="tiles"
         ><mat-icon>grid_view</mat-icon></mat-button-toggle
@@ -40,10 +40,7 @@
         [showDivider]="true"
         [showStatusBar]="true"
         [showTooltips]="true"
-        [showActionButton]="user.id !== auth.currentUser()?.id"
-        [actionText]="
-          user.id !== auth.currentUser()?.id ? 'Wybierz' : 'Zalogowany'
-        "
+        [actionText]="'Wybierz'"
         class="card"
         (onActionButtonClick)="selectUser(users[i])"
       ></app-user-card>
@@ -87,7 +84,6 @@
           mat-button
           (click)="selectUser(element)"
           style="margin: auto; width: 100%"
-          *ngIf="element.id !== auth.currentUser()?.id; else loggedUserText"
         >
           Wybierz
         </button>
